@@ -20,7 +20,7 @@ namespace BuyMyHouse
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureServices(services =>
                 {
-                    // services.AddAutoMapper(typeof(Program));
+                    services.AddAutoMapper(typeof(Program));
 
                     services.AddSingleton(new FunctionConfiguration(config));
                     services.AddDbContext<BuyHouseContext>();
