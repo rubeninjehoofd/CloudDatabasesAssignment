@@ -2,33 +2,33 @@ using System;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace BuyMyHouse
+namespace BuyMyHouse.API
 {
-    public class ProcessFinancialInfo
+    public class SendMail
     {
         private readonly ILogger _logger;
 
-        public ProcessFinancialInfo(ILoggerFactory loggerFactory)
+        public SendMail(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<ProcessFinancialInfo>();
+            _logger = loggerFactory.CreateLogger<SendMail>();
         }
 
-        [Function("ProcessFinancialInfo")]
-        public void Run([TimerTrigger("0 */5 * * * *")] MyInfo myTimer)
+        [Function("SendMail")]
+        public void Run([TimerTrigger("0 0 8 * * *")] MailResults myTimer)
         {
             _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             _logger.LogInformation($"Next timer schedule at: {myTimer.ScheduleStatus.Next}");
         }
     }
 
-    public class MyInfo
+    public class MailResults
     {
-        public MyScheduleStatus ScheduleStatus { get; set; }
+        public MailScheduleStatus ScheduleStatus { get; set; }
 
         public bool IsPastDue { get; set; }
     }
 
-    public class MyScheduleStatus
+    public class MailScheduleStatus
     {
         public DateTime Last { get; set; }
 
