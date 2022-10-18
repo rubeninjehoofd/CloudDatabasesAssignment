@@ -5,16 +5,16 @@ using Microsoft.Extensions.Logging;
 
 namespace BuyMyHouse
 {
-    public class Function1
+    public class PostFinancialInfo
     {
         private readonly ILogger _logger;
 
-        public Function1(ILoggerFactory loggerFactory)
+        public PostFinancialInfo(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<Function1>();
+            _logger = loggerFactory.CreateLogger<PostFinancialInfo>();
         }
 
-        [Function("Function1")]
+        [Function("PostFinancialInfo")]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
