@@ -9,15 +9,15 @@ namespace BuyMyHouse.DAL
 {
     public class FunctionConfiguration
     {
-        public string SqlEndpoint { get; }
-        public string SqlAccountKey { get; }
-        public string SqlDatabaseName { get; }
+        public string CosmosAccountEndpoint { get; }
+        public string CosmosAccountKey { get; }
+        public string CosmosDatabaseName { get; }
 
         public FunctionConfiguration(IConfiguration config)
         {
-            SqlEndpoint = config["SqlEndpoint"];
-            SqlAccountKey = config["SqlAccountKey"];
-            SqlDatabaseName = config["SqlDatabaseName"];
+            CosmosAccountEndpoint = config["CosmosAccountEndpoint"];
+            CosmosAccountKey = config["CosmosAccountKey"];
+            CosmosDatabaseName = config["CosmosDatabaseName"];
         }
     }
 }

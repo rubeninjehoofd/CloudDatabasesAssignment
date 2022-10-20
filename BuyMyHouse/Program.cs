@@ -2,6 +2,7 @@ using BuyMyHouse.DAL;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace BuyMyHouse
 {
@@ -12,7 +13,7 @@ namespace BuyMyHouse
             var config = new ConfigurationBuilder()
                 .SetBasePath(Environment.CurrentDirectory)
                 .AddJsonFile("local.settings.json", true, true)
-                // .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
+                .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
                 .AddEnvironmentVariables()
                 .Build();
 

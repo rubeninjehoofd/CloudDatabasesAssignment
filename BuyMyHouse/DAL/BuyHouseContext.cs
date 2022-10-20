@@ -1,33 +1,33 @@
-﻿using BuyMyHouse.Models;
+﻿using BuyMyHouse.DAL.EntityTypeConfigurations;
+using BuyMyHouse.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BuyMyHouse.DAL
 {
     public class BuyHouseContext : DbContext
     {
+        private readonly FunctionConfiguration _config;
+
         public DbSet<Customer> Customer { get; set; }
 
-        public DbSet<House> Houses { get; set; }
+        // public DbSet<House> Houses { get; set; }
 
-        public BuyHouseContext(DbContextOptions<BuyHouseContext> options) : base(options)
+        public BuyHouseContext(FunctionConfiguration config) 
         {
+            _config = config;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>(entity =>
-            {
-                entity.HasIndex(e => e.CustomerID)
-                .HasDatabaseName("CustomerCode");
+            modelBuilder.ApplyConfiguration(new CustomerEntityTypeConfiguration());
+        }
 
-                // entity.HasMany(d => d.Invoice);
-
-            }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseCosmos(
+                accountEndpoint: _config.CosmosAccountEndpoint,
+                accountKey: _config.CosmosAccountKey,
+                databaseName: _config.CosmosDatabaseName
             );
         }
     }

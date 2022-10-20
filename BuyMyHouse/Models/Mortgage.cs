@@ -1,14 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BuyMyHouse.Models.Interfaces;
 
 namespace BuyMyHouse.Models
 {
-    public class Mortgage
+    public class Mortgage : Entity
     {
-        public Guid MortgageID { get; set; }
-        public double Worth { get; set; }
+        public double? Worth { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public DateTime WatchTime { get; set; }
+
+        public Mortgage(double? worth)
+        {
+            Worth = worth;
+            WatchTime = DateTime.Now;
+        }
     }
 }

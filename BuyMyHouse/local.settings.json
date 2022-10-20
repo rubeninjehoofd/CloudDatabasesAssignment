@@ -1,8 +1,10 @@
 {
     "IsEncrypted": false,
-    "Values": {
-      "AzureWebJobsStorage": "",
-        "HouseImagesContainer":  "HouseImages",
-        "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
-    }
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "HouseImagesContainer": "HouseImages",
+    "CosmosAccountEndpoint": "https://localhost:8081",
+    "CosmosDatabaseName": "BuyMyHouse",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
+  }
 }

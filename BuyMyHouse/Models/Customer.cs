@@ -1,17 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using BuyMyHouse.Models.Interfaces;
 
 namespace BuyMyHouse.Models
 {
-    public class Customer 
+    public class Customer : Entity 
     {
-        public Guid CustomerID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        private const int MONTHS_IN_YEAR = 12;
+        private const double INTEREST = 1.06;
+        public string? FirstName { get; set; }
+
+        public string? LastName { get; set; }
+
         public double Income { get; set; }
 
+        public Mortgage? Mortgage { get; set; }
+
+        public long LoanTerm { get; set; }
+
+        public double PurchasePrice { get; set; }
+
+        public double? CalculatedMortgage
+        {
+            get
+            {
+                double calculatedMortgage = PurchasePrice / (LoanTerm * MONTHS_IN_YEAR) + (PurchasePrice * INTEREST / (LoanTerm * MONTHS_IN_YEAR));
+                return Math.Round(calculatedMortgage, 2, MidpointRounding.AwayFromZero);
+            }
+        }
     }
 }
