@@ -4,15 +4,14 @@ namespace BuyMyHouse.Models
 {
     public class Mortgage : Entity
     {
-        public double? Worth { get; set; }
+        public double? MaximumWorth { get; set; }
 
-        public Guid UserId { get; set; }
+        public Guid CustomerId { get; set; }
 
         public DateTime WatchTime { get; set; }
 
-        public Mortgage(double? worth)
+        public Mortgage()
         {
-            Worth = worth;
             WatchTime = DateTime.Now;
         }
     }

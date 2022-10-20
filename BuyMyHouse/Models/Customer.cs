@@ -10,20 +10,21 @@ namespace BuyMyHouse.Models
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
+        public string? Email { get; set; }
 
-        public double Income { get; set; }
+        public double AnnualIncome { get; set; }
 
         public Mortgage? Mortgage { get; set; }
 
-        public long LoanTerm { get; set; }
+        public long LoanDuration { get; set; }
 
         public double PurchasePrice { get; set; }
 
-        public double? CalculatedMortgage
+        public double? MaxMortgageWorth
         {
             get
             {
-                double calculatedMortgage = PurchasePrice / (LoanTerm * MONTHS_IN_YEAR) + (PurchasePrice * INTEREST / (LoanTerm * MONTHS_IN_YEAR));
+                double calculatedMortgage = PurchasePrice / (LoanDuration * MONTHS_IN_YEAR) + (PurchasePrice * INTEREST / (LoanDuration * MONTHS_IN_YEAR));
                 return Math.Round(calculatedMortgage, 2, MidpointRounding.AwayFromZero);
             }
         }

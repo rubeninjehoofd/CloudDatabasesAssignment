@@ -8,9 +8,7 @@ namespace BuyMyHouse.DAL
     {
         private readonly FunctionConfiguration _config;
 
-        public DbSet<Customer> Customer { get; set; }
-
-        // public DbSet<House> Houses { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         public BuyHouseContext(FunctionConfiguration config) 
         {

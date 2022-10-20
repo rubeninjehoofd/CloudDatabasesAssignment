@@ -5,13 +5,13 @@ using Microsoft.Extensions.Logging;
 
 namespace BuyMyHouse.API
 {
-    public class PostFinancialInfo
+    public class MortgagesController
     {
         private readonly ILogger _logger;
 
-        public PostFinancialInfo(ILoggerFactory loggerFactory)
+        public MortgagesController(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<PostFinancialInfo>();
+            _logger = loggerFactory.CreateLogger<MortgagesController>();
         }
 
         [Function("PostFinancialInfo")]

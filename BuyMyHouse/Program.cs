@@ -1,4 +1,9 @@
 using BuyMyHouse.DAL;
+using BuyMyHouse.DAL.Repositories;
+using BuyMyHouse.Models;
+using BuyMyHouse.Services;
+using BuyMyHouse.Services.Interfaces;
+using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,12 +24,20 @@ namespace BuyMyHouse
 
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults()
+                .ConfigureOpenApi()
                 .ConfigureServices(services =>
                 {
                     services.AddAutoMapper(typeof(Program));
 
                     services.AddSingleton(new FunctionConfiguration(config));
                     services.AddDbContext<BuyHouseContext>();
+
+                    services.AddScoped<IBaseRepository<Customer>, CustomerRepository>();
+                    services.AddScoped<IBaseRepository<Mortgage>, MortgageRepository>();
+                    services.AddScoped<ICustomerService, CustomerService>();
+
+                    services.AddSingleton<IEmailService, EmailService>();
+
                 })
                 .Build();
             await host.RunAsync();
