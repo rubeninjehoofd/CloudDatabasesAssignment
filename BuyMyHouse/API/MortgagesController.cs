@@ -1,36 +1,50 @@
 using System.Net;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow.Schemas;
+using AutoMapper;
+using BuyMyHouse.Models;
+using BuyMyHouse.Models.DTO;
+using BuyMyHouse.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
 
 namespace BuyMyHouse.API
 {
     public class MortgagesController
     {
         private readonly ILogger _logger;
+        private readonly IMortgageService _mortgageService;
+        private readonly IMapper _mapper;
 
-        public MortgagesController(ILoggerFactory loggerFactory)
+        public MortgagesController(ILoggerFactory loggerFactory, IMortgageService mortgageService, IMapper mapper)
         {
             _logger = loggerFactory.CreateLogger<MortgagesController>();
+            _mortgageService = mortgageService ?? throw new ArgumentNullException(nameof(mortgageService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        [Function("GetMortageById")]
+        [Function("GetMortageByCustomer")]
         [OpenApiOperation(operationId: "Get mortgage", tags: new[] { "Get mortgage" }, Summary = "Get a mortgage from a customer", Description = "This endpoint returns the data of a specific mortgage from a user.")]
-        [OpenApiParameter(name: "userId", In = ParameterLocation.Path, Required = true)]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(UserResponseDTO), Description = "The OK response"/*, Example = typeof(GetUserExample)*/)]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
+        [OpenApiParameter(name: "customerId", In = ParameterLocation.Path, Required = true)]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(MortgageResponse), Description = "The OK response"/*, Example = typeof(GetUserExample)*/)]
+        public async Task<HttpResponseData> GetMortgageByCustomer([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "mortgages/{customerId:Guid}")] HttpRequestData req, Guid customerId)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            HttpResponseData response = req.CreateResponse();
 
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+            try
+            {
+                Mortgage mortgage = await _mortgageService.GetMortgageByCustomer(customerId);
 
-            response.WriteString("Welcome to Azure Functions!");
+                MortgageResponse mapperMortgage = _mapper.Map<MortgageResponse>(mortgage);
+
+                await response.WriteAsJsonAsync(mapperMortgage);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                await response.WriteAsJsonAsync(ex.Message, HttpStatusCode.BadRequest);
+            }
 
             return response;
         }

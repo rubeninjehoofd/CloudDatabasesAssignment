@@ -8,11 +8,11 @@ namespace BuyMyHouse.Models
 
         public Guid CustomerId { get; set; }
 
-        public DateTime WatchTime { get; set; }
+        public DateTime ExpiresAt { get; set; }
 
         public Mortgage()
         {
-            WatchTime = DateTime.Now;
+            ExpiresAt = DateTime.Now.AddHours(12);
         }
     }
 }

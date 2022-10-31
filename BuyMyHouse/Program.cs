@@ -34,9 +34,10 @@ namespace BuyMyHouse
 
                     services.AddScoped<IBaseRepository<Customer>, CustomerRepository>();
                     services.AddScoped<IBaseRepository<Mortgage>, MortgageRepository>();
-                    services.AddScoped<ICustomerService, CustomerService>();
-
-                    services.AddSingleton<IEmailService, EmailService>();
+                    services.AddScoped<IMortgageRepository, MortgageRepository>();
+                    services.AddScoped<IMortgageService, MortgageService>();
+                    services.AddScoped<ICustomerService, CustomerService>(); 
+                    services.AddScoped<IEmailService, EmailService>();
 
                 })
                 .Build();

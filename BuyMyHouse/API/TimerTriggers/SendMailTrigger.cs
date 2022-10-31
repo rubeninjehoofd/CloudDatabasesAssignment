@@ -1,4 +1,3 @@
-using BuyMyHouse.Services;
 using BuyMyHouse.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
@@ -17,8 +16,8 @@ namespace BuyMyHouse.API.TimerTriggers
             _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
 
-        [Function("SendMail")]
-        public void Run([TimerTrigger("0 0 8 * * *")] Timer myTimer)
+        [Function("SendEmails")]
+        public void Run([TimerTrigger("0 0 6 * * *")] Timer myTimer)
         {
             try
             {

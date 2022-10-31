@@ -28,7 +28,7 @@ namespace BuyMyHouse.Services
                 else
                 {
                     customer.Mortgage.MaximumWorth = customer.MaxMortgageWorth;
-                    customer.Mortgage.WatchTime = DateTime.Now;
+                    customer.Mortgage.ExpiresAt = DateTime.Now.AddHours(12);
                 }
             }
 

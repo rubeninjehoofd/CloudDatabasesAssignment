@@ -1,5 +1,4 @@
 using System.Net;
-using System.Security.Principal;
 using AutoMapper;
 using BuyMyHouse.Models;
 using BuyMyHouse.Models.DTO;
@@ -29,9 +28,10 @@ namespace BuyMyHouse.API
         [OpenApiOperation(operationId: "Create customer", tags: new[] { "Create customer" }, Summary = "Create a new customer", Description = "This endpoint allows the creation of a new customer.")]
         [OpenApiRequestBody("application/json", typeof(CreateCustomerDTO), Description = "The customer data."/*, Example = typeof(CreateUserExample)*/)]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(CustomerResponse), Description = "The CREATED response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The CREATED response")]
         public async Task<HttpResponseData> CreateCustomer([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "customers")] HttpRequestData req)
         {
-            HttpResponseData response;
+            HttpResponseData response = req.CreateResponse();
 
             try
             {
@@ -50,15 +50,12 @@ namespace BuyMyHouse.API
 
                 var createdCustomer = await _customerService.Create(customer);
 
-                await _customerService.CalculateMortgages();
-
                 if (createdCustomer is null)
                     response = req.CreateResponse(HttpStatusCode.BadRequest);
                 else
                 {
                     var mappedCustomer = _mapper.Map<CustomerResponse>(createdCustomer);
-                    response = req.CreateResponse(HttpStatusCode.Created);
-                    await response.WriteAsJsonAsync(mappedCustomer);
+                    await response.WriteAsJsonAsync(mappedCustomer, HttpStatusCode.Created);
                 }
             }
             catch (Exception ex)

@@ -17,7 +17,7 @@ namespace BuyMyHouse.API.TimerTriggers
             _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
         }
 
-        [Function("ProcessFinancialInfo")]
+        [Function("CalculateMortgages")]
         public void Run([TimerTrigger("0 59 23 * * *")] Timer myTimer)
         {
             _logger.LogInformation("Calculating mortgages for all users");

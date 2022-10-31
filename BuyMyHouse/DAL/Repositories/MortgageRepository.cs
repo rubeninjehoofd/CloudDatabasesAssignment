@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BuyMyHouse.DAL.Repositories
 {
-    public class MortgageRepository : BaseRepository<Mortgage>
+    public class MortgageRepository : BaseRepository<Mortgage>, IMortgageRepository
     {
         public MortgageRepository(BuyHouseContext dbContext) : base(dbContext) { }
 
