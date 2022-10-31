@@ -26,7 +26,7 @@ namespace BuyMyHouse.API
 
         [Function("CreateCustomer")]
         [OpenApiOperation(operationId: "Create customer", tags: new[] { "Create customer" }, Summary = "Create a new customer", Description = "This endpoint allows the creation of a new customer.")]
-        [OpenApiRequestBody("application/json", typeof(CreateCustomerDTO), Description = "The customer data."/*, Example = typeof(CreateUserExample)*/)]
+        [OpenApiRequestBody("application/json", typeof(CreateCustomerDTO), Description = "The customer data.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(CustomerResponse), Description = "The CREATED response")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The CREATED response")]
         public async Task<HttpResponseData> CreateCustomer([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "customers")] HttpRequestData req)
