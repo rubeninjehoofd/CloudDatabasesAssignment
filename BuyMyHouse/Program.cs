@@ -31,7 +31,7 @@ namespace BuyMyHouse
 
                     services.AddSingleton(new FunctionConfiguration(config));
                     services.AddDbContext<BuyHouseContext>();
-                    asdfasdfasdfasdf
+
                     services.AddScoped<IBaseRepository<Customer>, CustomerRepository>();
                     services.AddScoped<IBaseRepository<Mortgage>, MortgageRepository>();
                     services.AddScoped<IMortgageRepository, MortgageRepository>();
