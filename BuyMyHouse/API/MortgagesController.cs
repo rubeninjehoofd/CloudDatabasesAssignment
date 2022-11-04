@@ -27,7 +27,7 @@ namespace BuyMyHouse.API
         [Function("GetMortageByCustomer")]
         [OpenApiOperation(operationId: "Get mortgage", tags: new[] { "Get mortgage" }, Summary = "Get a mortgage from a customer", Description = "This endpoint returns the data of a specific mortgage from a user.")]
         [OpenApiParameter(name: "customerId", In = ParameterLocation.Path, Required = true)]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(MortgageResponse), Description = "The OK response"/*, Example = typeof(GetUserExample)*/)]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(MortgageResponse), Description = "The OK response")]
         public async Task<HttpResponseData> GetMortgageByCustomer([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "mortgages/{customerId:Guid}")] HttpRequestData req, Guid customerId)
         {
             HttpResponseData response = req.CreateResponse();
